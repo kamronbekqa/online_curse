@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}Biz haqimizda - Bilgi{% endblock %}
+
+{% block content %}
+<div class="bg-white min-h-screen">
+    <!-- Hero Section -->
+    <section class="py-20 brand-gradient text-white relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <svg class="w-full h-full" fill="currentColor" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path d="M0 100 C 20 0 50 0 100 100 Z"></path>
+            </svg>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight">Bilgi haqida</h1>
+            <p class="text-xl md:text-2xl text-indigo-100 max-w-3xl mx-auto">
+                Biz ta'lim olishni hamma uchun oson, qulay va hamyonbop qilishni maqsad qilganmiz.
+            </p>
+        </div>
+    </section>
+
+    <!-- Content Section -->
+    <section class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-3xl font-bold text-dark mb-6">Bizning missiyamiz</h2>
+                    <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+                        O'zbekistondagi ta'lim bozorini raqamlashtirish va o'quvchilarga eng yaxshi o'quv kurslarini bo'lib to'lash imkoniyati bilan taqdim etish.
+                    </p>
+                    <p class="text-lg text-gray-600 mb-8 leading-relaxed">
+                        Bilgi.uz - bu shunchaki platforma emas, balki bilimga chanqoq yoshlar va zamonaviy ta'lim markazlari o'rtasidagi ko'prikdir. Biz o'qish uchun moliyaviy to'siqlarni olib tashlashga harakat qilamiz.
+                    </p>
+                    <div class="grid grid-cols-2 gap-8">
+                        <div>
+                            <p class="text-4xl font-bold text-brand mb-1">100+</p>
+                            <p class="text-gray-500 uppercase tracking-wider text-sm font-semibold">Hamkorlar</p>
+                        </div>
+                        <div>
+                            <p class="text-4xl font-bold text-brand mb-1">10k+</p>
+                            <p class="text-gray-500 uppercase tracking-wider text-sm font-semibold">O'quvchilar</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 rounded-3xl p-8 relative">
+                    <div class="aspect-square bg-indigo-100 rounded-2xl flex items-center justify-center">
+                         <svg class="w-32 h-32 text-brand opacity-20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L1 7l11 5 11-5-11-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
+                    </div>
+                    <!-- Decorative element -->
+                    <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-yellow-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-pulse"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Us Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-dark text-center mb-16">Nima uchun aynan Bilgi?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-white shadow-sm rounded-2xl flex items-center justify-center mx-auto mb-6 text-brand">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Bo'lib to'lash</h3>
+                    <p class="text-gray-600">O'quv kurslari uchun to'lovni 12 oygacha bo'lib to'lash imkoniyati.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-white shadow-sm rounded-2xl flex items-center justify-center mx-auto mb-6 text-brand">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Ishonchli markazlar</h3>
+                    <p class="text-gray-600">Faqatgina tekshirilgan va yuqori reytingli o'quv markazlari bilan ishlaymiz.</p>
+                </div>
+                <div class="text-center">
+                    <div class="w-16 h-16 bg-white shadow-sm rounded-2xl flex items-center justify-center mx-auto mb-6 text-brand">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Tezkor rasmiylashtirish</h3>
+                    <p class="text-gray-600">Ariza qoldiring va 24 soat ichida javob oling.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

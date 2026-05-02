@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="relative bg-white py-20 sm:py-32 overflow-hidden">
+    <div class="absolute top-0 left-0 w-full h-full opacity-5 pointer-events-none">
+        <svg class="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+                <path d="M 10 0 L 0 0 0 10" fill="none" stroke="currentColor" stroke-width="0.5"/>
+            </pattern>
+            <rect width="100" height="100" fill="url(#grid)" />
+        </svg>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center relative z-10">
+        <div class="md:w-1/2 pr-8 mb-12 md:mb-0">
+            <span class="inline-block py-1 px-3 rounded-full bg-indigo-50 text-brand text-xs font-bold uppercase tracking-wider mb-4">O'zbekistondagi 1-raqamli LMS</span>
+            <h1 class="text-5xl md:text-7xl font-extrabold text-dark leading-tight mb-6">
+                Bilim oling, <span class="text-brand">to'lovni keyin</span> qiling
+            </h1>
+            <p class="text-xl text-gray-600 mb-10 max-w-lg leading-relaxed">
+                Kurslarni bo'lib to'lash imkoniyati bilan o'rganing. Hech qanday foizlarsiz va yashirin to'lovlarsiz.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a href="{% url 'course_list' %}" class="brand-gradient hover:opacity-90 text-white text-center px-10 py-4 rounded-xl text-lg font-bold transition-all shadow-xl shadow-brand/30 hover:-translate-y-1">
+                    Kurslar katalogi
+                </a>
+                <a href="{% url 'about_us' %}" class="bg-white border-2 border-gray-100 hover:border-brand/20 text-dark text-center px-10 py-4 rounded-xl text-lg font-bold transition-all hover:bg-gray-50">
+                    Biz haqimizda
+                </a>
+            </div>
+        </div>
+        <div class="md:w-1/2 flex justify-center">
+            <div class="relative w-full max-w-lg">
+                <div class="absolute -top-10 -left-10 w-72 h-72 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+                <div class="absolute -bottom-10 -right-10 w-72 h-72 bg-brand/30 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+                <div class="relative bg-white p-2 rounded-3xl shadow-2xl border border-gray-100 overflow-hidden transform rotate-2 hover:rotate-0 transition-transform duration-500">
+                    <img src="{% static 'course_images/python.png' %}" alt="LMS Illustration" class="rounded-2xl w-full h-auto">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Installment Info Section -->
+<section class="bg-gray-50 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl font-bold text-dark mb-12">Kurslar uchun eng yaxshi to'lov shartlari</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center">
+                <div class="w-16 h-16 bg-brand/10 rounded-full flex items-center justify-center mb-6 text-brand">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold mb-2">To'lov 12 oyga beriladi</h3>
+                <p class="text-gray-500 text-center">Kursni tanlang va to'lovni 12 oyga bo'lib to'lang.</p>
+            </div>
+            <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6 text-green-600">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold mb-2">O'qishni tugatib to'lang</h3>
+                <p class="text-gray-500 text-center">2 oylik imtiyozli davrdan so'ng to'lashni boshlang.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Popular Courses Slider (Simulated via Alpine.js) -->
+<section class="bg-white py-16" x-data="{ currentSlide: 0 }">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-end mb-8">
+            <h2 class="text-3xl font-bold text-dark">Mashhur kurslar</h2>
+            <a href="{% url 'course_list' %}" class="text-brand font-medium hover:text-brand-hover">Barcha kurslar &rarr;</a>
+        </div>
+        
+        <!-- Grid instead of a complex slider for simplicity, matching "bilgi.uz" grid style -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for course in popular_courses %}
+            <div class="bg-white border border-gray-200 rounded-xl overflow-hidden hover-lift group flex flex-col">
+                <div class="h-48 bg-gray-200 relative">
+                    {% if course.image %}
+                    <img src="{{ course.image.url }}" alt="{{ course.title }}" class="w-full h-full object-cover">
+                    {% else %}
+                    <div class="w-full h-full flex items-center justify-center bg-indigo-50 text-indigo-200">
+                        <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    </div>
+                    {% endif %}
+                    <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xs font-medium text-gray-700 shadow-sm">
+                        {{ course.category.name }}
+                    </div>
+                </div>
+                <div class="p-5 flex-grow flex flex-col">
+                    <h3 class="text-xl font-bold text-dark mb-2 group-hover:text-brand transition-colors"><a href="{% url 'course_detail' course.slug %}">{{ course.title }}</a></h3>
+                    <div class="flex items-center text-sm text-gray-500 mb-4">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        {{ course.duration_months }} oy
+                    </div>
+                    <div class="mt-auto pt-4 border-t border-gray-100 flex justify-between items-center">
+                        <div>
+                            <p class="text-xs text-gray-500 uppercase tracking-wider">Oyiga</p>
+                            <p class="text-lg font-bold text-dark">{{ course.monthly_payment|floatformat:0 }} so'm</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-gray-500 col-span-3 text-center py-12">Hozircha kurslar yo'q.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- FAQ / Help Section -->
+<section class="bg-gray-50 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl">
+        <h2 class="text-3xl font-bold text-dark mb-6">Sizda savollar paydo bo'ldimi?</h2>
+        <p class="text-lg text-gray-600 mb-8">
+            Sizni qiziqtirgan kursni bo`lib to`lash evaziga xarid qilishga ariza qoldirish uchun videoqo`llanmani tomosha qiling. Agar sizda boshqa savollar bo'lsa, iltimos, tugmani bosing.
+        </p>
+        <button class="bg-white border-2 border-brand text-brand hover:bg-brand hover:text-white px-8 py-3 rounded-md text-lg font-medium transition-colors shadow-sm">
+            Maslahat kerak
+        </button>
+    </div>
+</section>
+{% endblock %}

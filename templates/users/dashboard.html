@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="bg-gray-50 py-8 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex items-center justify-between mb-8">
+            <h1 class="text-3xl font-bold text-dark">Shaxsiy kabinet</h1>
+            <a href="{% url 'logout' %}" class="text-sm font-medium text-red-600 hover:text-red-800 transition-colors">
+                Chiqish
+            </a>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left: User Info -->
+            <div class="lg:col-span-1">
+                <div class="bg-white p-8 rounded-3xl shadow-xl shadow-brand/5 border border-gray-100 mb-8 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 brand-gradient opacity-10 rounded-bl-full"></div>
+                    <div class="flex flex-col items-center text-center mb-8">
+                        <div class="w-24 h-24 brand-gradient rounded-3xl flex items-center justify-center text-white text-4xl font-black uppercase shadow-xl shadow-brand/30 mb-4 transform -rotate-3">
+                            {{ user.username|make_list|first }}
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-black text-dark">{{ user.username }}</h2>
+                            <p class="text-gray-400 text-sm font-medium">{{ user.email }}</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4 pt-6 border-t border-gray-50">
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-gray-400 font-medium uppercase tracking-wider text-xs">Telefon:</span>
+                            <span class="font-bold text-dark">{{ user.phone_number|default:"Kiritilmagan" }}</span>
+                        </div>
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-gray-400 font-medium uppercase tracking-wider text-xs">Rol:</span>
+                            <span class="bg-indigo-50 text-brand px-2 py-0.5 rounded-lg font-bold text-xs capitalize">{{ user.role }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Content -->
+            <div class="lg:col-span-2 space-y-8">
+                
+                <!-- Applications -->
+                <div class="bg-white p-8 rounded-3xl shadow-xl shadow-brand/5 border border-gray-100">
+                    <h3 class="text-2xl font-black text-dark mb-6">Arizalarim</h3>
+                    {% if applications %}
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead>
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kurs</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sana</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Holat</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200">
+                                {% for app in applications %}
+                                <tr>
+                                    <td class="px-4 py-4 whitespace-nowrap font-medium text-dark">{{ app.course.title }}</td>
+                                    <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-500">{{ app.created_at|date:"d.m.Y" }}</td>
+                                    <td class="px-4 py-4 whitespace-nowrap">
+                                        {% if app.status == 'pending' %}
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">Kutilmoqda</span>
+                                        {% elif app.status == 'approved' %}
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Tasdiqlangan</span>
+                                        {% else %}
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Rad etilgan</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-gray-500 text-sm">Hozircha arizalar yo'q.</p>
+                    {% endif %}
+                </div>
+
+                <!-- Payment Schedules -->
+                <div class="bg-white p-8 rounded-3xl shadow-xl shadow-brand/5 border border-gray-100">
+                    <h3 class="text-2xl font-black text-dark mb-6">To'lov rejalari</h3>
+                    {% if payment_schedules %}
+                    {% for schedule in payment_schedules %}
+                    <div class="mb-10 last:mb-0 bg-gray-50/50 p-6 rounded-2xl border border-gray-100">
+                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
+                            <div>
+                                <h4 class="text-xl font-black text-dark">{{ schedule.application.course.title }}</h4>
+                                <p class="text-gray-400 text-sm">Umumiy qarz: <span class="font-bold text-brand">{{ schedule.total_amount }} so'm</span></p>
+                            </div>
+                            <div class="mt-4 sm:mt-0 text-right">
+                                <p class="text-xs font-bold text-gray-400 uppercase tracking-widest">Oylik to'lov</p>
+                                <p class="text-2xl font-black text-brand">{{ schedule.monthly_amount }} so'm</p>
+                            </div>
+                        </div>
+                            
+                            <div class="mt-4">
+                                <h5 class="text-sm font-medium text-gray-700 mb-3">To'lov grafigi (Imtiyozli davrdan so'ng: {{ schedule.start_date|date:"d.m.Y" }})</h5>
+                                <div class="space-y-2">
+                                    {% for installment in schedule.installments.all %}
+                                    <div class="flex justify-between items-center text-sm py-2 px-3 {% if installment.is_paid %}bg-green-50 text-green-800 border border-green-100 rounded-md{% else %}bg-gray-50 text-gray-600 rounded-md{% endif %}">
+                                        <span>{{ installment.due_date|date:"d.m.Y" }}</span>
+                                        <div class="flex items-center space-x-3">
+                                            <span>{{ installment.amount|floatformat:0 }} so'm</span>
+                                            {% if installment.is_paid %}
+                                            <svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                            {% else %}
+                                            <a href="{% url 'pay_installment' installment.id %}" class="text-xs font-bold text-brand hover:text-brand-hover underline uppercase tracking-tighter">To'lash</a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p class="text-gray-500 text-sm">Hozircha faol to'lov rejalari yo'q.</p>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}

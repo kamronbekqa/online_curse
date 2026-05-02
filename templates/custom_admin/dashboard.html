@@ -1,0 +1,220 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uz">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Bilgi Admin Panel</title>
+    <link rel="stylesheet" href="{% static 'admin_custom/assets/vendors/mdi/css/materialdesignicons.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'admin_custom/assets/vendors/flag-icon-css/css/flag-icon.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'admin_custom/assets/vendors/css/vendor.bundle.base.css' %}" />
+    <link rel="stylesheet" href="{% static 'admin_custom/assets/vendors/font-awesome/css/font-awesome.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'admin_custom/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'admin_custom/assets/css/style.css' %}" />
+    <link rel="shortcut icon" href="{% static 'admin_custom/assets/images/favicon.png' %}" />
+  </head>
+  <body>
+    <div class="container-scroller">
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <div class="text-center sidebar-brand-wrapper d-flex align-items-center">
+          <a class="sidebar-brand brand-logo" href="{% url 'custom_admin:dashboard' %}"><h2 class="text-brand m-0">Bilgi.uz</h2></a>
+          <a class="sidebar-brand brand-logo-mini pl-4 pt-3" href="{% url 'custom_admin:dashboard' %}"><h4 class="text-brand">B</h4></a>
+        </div>
+        <ul class="nav">
+          <li class="nav-item nav-profile">
+            <a href="#" class="nav-link">
+              <div class="nav-profile-image">
+                <div class="w-10 h-10 bg-brand rounded-circle flex items-center justify-center text-white font-weight-bold">
+                  {{ user.username|make_list|first|upper }}
+                </div>
+              </div>
+              <div class="nav-profile-text d-flex flex-column pr-3">
+                <span class="font-weight-medium mb-2">{{ user.username }}</span>
+                <span class="font-weight-normal">Administrator</span>
+              </div>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'custom_admin:dashboard' %}">
+              <i class="mdi mdi-home menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'custom_admin:application_list' %}">
+              <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+              <span class="menu-title">Arizalar (Buyurtmalar)</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'course_list' %}">
+              <i class="mdi mdi-book-open-page-variant menu-icon"></i>
+              <span class="menu-title">Kurslar</span>
+            </a>
+          </li>
+          <li class="nav-item sidebar-actions">
+            <div class="nav-link">
+              <div class="mt-4">
+                <ul class="mt-4 pl-0">
+                  <li><a href="{% url 'logout' %}" class="text-danger">Chiqish</a></li>
+                </ul>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </nav>
+      <div class="container-fluid page-body-wrapper">
+        <nav class="navbar col-lg-12 col-12 p-lg-0 fixed-top d-flex flex-row">
+          <div class="navbar-menu-wrapper d-flex align-items-stretch justify-content-between">
+            <button class="navbar-toggler navbar-toggler align-self-center mr-2" type="button" data-toggle="minimize">
+              <i class="mdi mdi-menu"></i>
+            </button>
+            <ul class="navbar-nav navbar-nav-right ml-lg-auto">
+              <li class="nav-item nav-profile dropdown border-0">
+                <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown">
+                  <span class="profile-name">{{ user.username }}</span>
+                </a>
+                <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
+                  <a class="dropdown-item" href="{% url 'logout' %}">
+                    <i class="mdi mdi-logout mr-2 text-primary"></i> Chiqish </a>
+                </div>
+              </li>
+            </ul>
+            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+              <span class="mdi mdi-menu"></span>
+            </button>
+          </div>
+        </nav>
+        <div class="main-panel">
+          <div class="content-wrapper pb-0">
+            <div class="page-header flex-wrap">
+              <h3 class="mb-0"> Assalomu alaykum, {{ user.username }}! <span class="pl-0 h6 pl-sm-2 text-muted d-inline-block">Admin panelga xush kelibsiz.</span>
+              </h3>
+            </div>
+            <div class="row">
+              <div class="col-xl-3 col-lg-6 col-md-6 stretch-card grid-margin">
+                <div class="card bg-warning">
+                  <div class="card-body px-3 py-4">
+                    <div class="d-flex justify-content-between align-items-start">
+                      <div class="color-card">
+                        <p class="mb-0 color-card-head">Barcha arizalar</p>
+                        <h2 class="text-white">{{ total_applications }}</h2>
+                      </div>
+                      <i class="card-icon-indicator mdi mdi-basket bg-inverse-icon-warning"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-lg-6 col-md-6 stretch-card grid-margin">
+                <div class="card bg-danger">
+                  <div class="card-body px-3 py-4">
+                    <div class="d-flex justify-content-between align-items-start">
+                      <div class="color-card">
+                        <p class="mb-0 color-card-head">Kutilayotganlar</p>
+                        <h2 class="text-white">{{ pending_applications }}</h2>
+                      </div>
+                      <i class="card-icon-indicator mdi mdi-timer bg-inverse-icon-danger"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-lg-6 col-md-6 stretch-card grid-margin">
+                <div class="card bg-primary">
+                  <div class="card-body px-3 py-4">
+                    <div class="d-flex justify-content-between align-items-start">
+                      <div class="color-card">
+                        <p class="mb-0 color-card-head">Kurslar soni</p>
+                        <h2 class="text-white">{{ total_courses }}</h2>
+                      </div>
+                      <i class="card-icon-indicator mdi mdi-book-open-page-variant bg-inverse-icon-primary"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xl-3 col-lg-6 col-md-6 stretch-card grid-margin">
+                <div class="card bg-success">
+                  <div class="card-body px-3 py-4">
+                    <div class="d-flex justify-content-between align-items-start">
+                      <div class="color-card">
+                        <p class="mb-0 color-card-head">Foydalanuvchilar</p>
+                        <h2 class="text-white">{{ total_users }}</h2>
+                      </div>
+                      <i class="card-icon-indicator mdi mdi-account-circle bg-inverse-icon-success"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-xl-12 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body px-0 overflow-auto">
+                    <h4 class="card-title pl-4">So'nggi arizalar (Buyurtmalar)</h4>
+                    <div class="table-responsive">
+                      <table class="table">
+                        <thead class="bg-light">
+                          <tr>
+                            <th>Foydalanuvchi</th>
+                            <th>Kurs</th>
+                            <th>Sana</th>
+                            <th>Holat</th>
+                            <th>Amallar</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {% for app in recent_applications %}
+                          <tr>
+                            <td>
+                              <div class="d-flex align-items-center">
+                                <div class="table-user-name ml-3">
+                                  <p class="mb-0 font-weight-medium">{{ app.user.username }}</p>
+                                  <small>{{ app.user.phone_number }}</small>
+                                </div>
+                              </div>
+                            </td>
+                            <td>{{ app.course.title }}</td>
+                            <td>{{ app.created_at|date:"d.m.Y H:i" }}</td>
+                            <td>
+                              {% if app.status == 'pending' %}
+                                <div class="badge badge-inverse-warning"> Kutilmoqda </div>
+                              {% elif app.status == 'approved' %}
+                                <div class="badge badge-inverse-success"> Tasdiqlandi </div>
+                              {% else %}
+                                <div class="badge badge-inverse-danger"> Rad etildi </div>
+                              {% endif %}
+                            </td>
+                            <td>
+                              {% if app.status == 'pending' %}
+                              <a href="{% url 'custom_admin:approve_application' app.pk %}" class="btn btn-sm btn-success">Tasdiqlash</a>
+                              <a href="{% url 'custom_admin:reject_application' app.pk %}" class="btn btn-sm btn-danger">Rad etish</a>
+                              {% endif %}
+                            </td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                    <a class="text-black mt-3 d-block pl-4" href="{% url 'custom_admin:application_list' %}">
+                      <span class="font-weight-medium h6">Barcha arizalarni ko'rish</span>
+                      <i class="mdi mdi-chevron-right"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer class="footer">
+            <div class="d-sm-flex justify-content-center justify-content-sm-between">
+              <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © Bilgi.uz 2026</span>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </div>
+    <script src="{% static 'admin_custom/assets/vendors/js/vendor.bundle.base.js' %}"></script>
+    <script src="{% static 'admin_custom/assets/js/off-canvas.js' %}"></script>
+    <script src="{% static 'admin_custom/assets/js/hoverable-collapse.js' %}"></script>
+    <script src="{% static 'admin_custom/assets/js/misc.js' %}"></script>
+  </body>
+</html>

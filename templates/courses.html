@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="bg-gray-50 py-8 min-h-screen">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Breadcrumb & Title -->
+        <div class="mb-8">
+            <nav class="flex text-sm text-gray-500 mb-4">
+                <a href="{% url 'home' %}" class="hover:text-brand">Bosh sahifa</a>
+                <span class="mx-2">/</span>
+                <span class="text-gray-900">Kurslar</span>
+            </nav>
+            <h1 class="text-3xl font-bold text-dark">Barcha kurslar</h1>
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-8">
+            <!-- Sidebar / Filters -->
+            <aside class="w-full md:w-1/4">
+                <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm sticky top-24">
+                    <h3 class="text-lg font-bold mb-4 border-b pb-2">Toifalar</h3>
+                    <ul class="space-y-2">
+                        <li>
+                            <a href="{% url 'course_list' %}" 
+                               hx-get="{% url 'course_list' %}" 
+                               hx-target="#course-grid-container" 
+                               hx-push-url="true"
+                               class="block py-2 px-3 rounded-md transition-colors {% if not selected_category %}bg-indigo-50 text-brand font-medium{% else %}text-gray-600 hover:bg-gray-50{% endif %}">
+                                Barcha kurslar
+                            </a>
+                        </li>
+                        {% for category in categories %}
+                        <li>
+                            <a href="{% url 'course_list' %}?category={{ category.slug }}" 
+                               hx-get="{% url 'course_list' %}?category={{ category.slug }}" 
+                               hx-target="#course-grid-container" 
+                               hx-push-url="true"
+                               class="block py-2 px-3 rounded-md transition-colors {% if selected_category == category.slug %}bg-indigo-50 text-brand font-medium{% else %}text-gray-600 hover:bg-gray-50{% endif %}">
+                                {{ category.name }}
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- Course Grid -->
+            <div class="w-full md:w-3/4" id="course-grid-container">
+                {% include 'partials/course_grid.html' %}
+            </div>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}
